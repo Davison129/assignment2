@@ -136,11 +136,21 @@ int main(void)
 			//else if slot on both sides is full
 			//attack nearest player
 			//attack(record[i])
+			
+			//print all player names, types and life points after each move
 		}*/
 
 		return 0;
 }
 void attack(struct list record[i])
 {
+	//attacks nearest player
+	//if two players are equal distance away
+	//user chooses who to attack
 	
+	//if victim.strength<=70
+	//victim.lp=victim.lp-(0.5*victim.strength)
+	
+	//else if victim.strength>70
+	//predator.lp=predator.lp-(0.3*victim.strength)
 }
