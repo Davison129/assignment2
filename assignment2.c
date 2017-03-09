@@ -19,10 +19,10 @@ struct list
 	int luck;
 	int dexterity;
 	int slots;
-	int slotsT[10];
+	int slotsT;
 };
 
-void attack(struct list record[i]);
+void attack(struct list record[]);
 
 int main(void)
 {
@@ -78,7 +78,6 @@ int main(void)
 			else if(record[i].pType==2)
 			{
 				//human characteristics
-				int hsum=300;
 				record[i].lp=100;
 				record[i].smartness=1+rand()%99;
 				record[i].strength=1+rand()%99;
@@ -142,7 +141,8 @@ int main(void)
 
 		return 0;
 }
-void attack(struct list record[i])
+
+void attack(struct list record[])
 {
 	//attacks nearest player
 	//if two players are equal distance away
