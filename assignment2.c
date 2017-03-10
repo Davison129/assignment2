@@ -31,7 +31,7 @@ int main(void)
 {
 		setbuf(stdout,NULL);
 		srand(time(NULL));
-		int set,slotnum;
+		int set,slotnum,p;
 		
 		printf("\nInput the number of players to be inputed(max six): ");
 		scanf("%d",&set);
@@ -62,6 +62,12 @@ int main(void)
 			printf("\nInput player %d:\n",i);
 			printf("Select player type(1=Elf, 2=Human, 3=Ogre, 4=Wizard): ");
 			scanf("%d",&record[i].pType);//input integer representing type then assigning that value to struc
+			while(record[i].pType<1||record[i].pType>4)
+			{
+				printf("\nError. Re-enter player type.\n");
+				printf("Select player type(1=Elf, 2=Human, 3=Ogre, 4=Wizard): ");
+				scanf("%d",&record[i].pType);//input integer representing type then assigning that value to struc
+			}
 			printf("\nInput player name: ");
 			scanf("%s",&record[i].player);//same method as integer
 		}
@@ -126,6 +132,11 @@ int main(void)
 			printf("\nSlotT %d: %d\n",i,record[i].slotT);
 		}
 		
+		record[0].slots=0;
+		record[1].slots=8;
+		record[2].slots=10;
+		record[3].slots=15;
+		
 		for(i=0;i<set;i++)
 		{
 			printf("\nPlayer %d lp: %d\n",i,record[i].lp);
@@ -134,6 +145,7 @@ int main(void)
 			printf("\nPlayer %d magicskills: %d\n",i,record[i].magicskills);
 			printf("\nPlayer %d luck: %d\n",i,record[i].luck);
 			printf("\nPlayer %d dexterity: %d\n",i,record[i].dexterity);
+			printf("\nPlayer %d slots: %d\n",i,record[i].slots);
 		}
 		
 		//makeslots(record, slotnum);
@@ -148,6 +160,29 @@ int main(void)
 		for(i=0;i<set;i++)
 		{
 			attack(record,set,slotnum,i);
+			
+			
+			for(p=0;i<set;i++)
+			{
+				printf("\n%s ",i,record[p].player);
+				if(record[p].pType==1)
+				{
+					printf("%s, ","Elf");
+				}
+				else if(record[p].pType==2)
+				{
+					printf("%s, ","Human");
+				}
+				else if(record[p].pType==3)
+				{
+					printf("%s, ","Ogre");
+				}
+				else if(record[p].pType==4)
+				{
+					printf("%s, ","Wizard");
+				}
+				printf("%d)",i,record[p].lp);
+			}
 		}
 		
 		/*for(i=0;i<set;i++)
@@ -196,72 +231,54 @@ int main(void)
 
 void attack(struct list record[],int set,int slotnum, int o)
 {
-	int j,f,k,person,other;
-	//unsigned int diff=0,other=0;
+	int j,f,k,z=0,w=0,q,person,diff=0,victim;
+	unsigned int other=22;
+	
+	for(f=0;f<set;f++)
+	{
+		diff=record[o].slots-record[f].slots;
+		
+		if(diff<0)
+		{
+			diff=diff*(-1);
+		}
+		
+		if(diff<other&&diff!=0)
+		{
+			victim=diff;
+			other=diff;
+		}
+		printf("\nDiff %d: %d",f,diff);
+		printf("\nVICTIM %d: %d",f,victim);
+		printf("\nOTHER %d: %d",f,other);
+	}
 	
 	other=set-1;
 	
-	printf("\nPlayers you are allowed to attack:");
+	printf("\nPlayers, player %d is allowed to attack:",o);
 	for(f=0;f<set;f++)
 	{
-		if(f==o)
-		{
-			
-		}
-		else
+		if(record[f].slots==record[o].slots+victim)
 		{
 			printf("\nPlayer %d: %s",f,record[f].player);
+			z=f;
+		}
+		if(record[f].slots==record[o].slots-victim)
+		{
+			printf("\nPlayer %d: %s",f,record[f].player);
+			w=f;
 		}
 	}
 	
 	printf("\nEnter the number of the player you would like to attack: ");
 	scanf("%d",&person);
 	
-	while(person==o)
-	{
-		printf("\nError. Selected to attack self.");
-		printf("\nEnter the number of the player you would like to attack: ");
-		scanf("%d",&person);
-	}
-	
-	while(person<0||person>other)
+	while(person!=z||person!=w)
 	{
 		printf("\nError.");
 		printf("\nEnter the number of the player you would like to attack: ");
 		scanf("%d",&person);
 	}
-	
-	/*for(f=0;f<set;f++)
-	{
-		printf("\nPlayer %d lp: %d\n",f+1,record[f].lp);
-		printf("\nPlayer %d smartness: %d\n",f+1,record[f].smartness);
-		printf("\nPlayer %d strength: %d\n",f+1,record[f].strength);
-		printf("\nPlayer %d magicskills: %d\n",f+1,record[f].magicskills);
-		printf("\nPlayer %d luck: %d\n",f+1,record[f].luck);
-		printf("\nPlayer %d dexterity: %d\n",f+1,record[f].dexterity);
-	}*/
-	
-	/*for(k=0;k<slotnum;k++)
-	{
-		other=record[j].slots-record[k].slots;
-		if(other>diff)
-		{
-			diff=other;
-			printf("\nDiff %d: %u",k,diff);
-		}
-	}*/
-	
-	//printf("\nDiff %d: %u",k,diff);
-	
-	//attacks nearest player
-	//if two players are equal distance away
-	//user chooses who to attack
-	
-	//if victim.strength<=70
-	//victim.lp=victim.lp-(0.5*victim.strength)
-	
-	//else if victim.strength>70
-	//predator.lp=predator.lp-(0.3*victim.strength)
 	
 	if(record[person].strength<=70)
 	{
