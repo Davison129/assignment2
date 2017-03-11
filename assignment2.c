@@ -30,10 +30,12 @@ int main(void)
 		setbuf(stdout,NULL);
 		srand(time(NULL));
 		int set,num_of_slots,help;
-
+		
+		//inputs the number of players
 		printf("\nInput the number of players to be inputed(max six): ");
 		scanf("%d",&set);
 
+		//error checks the number of players
 		while(set<2||set>6)
 		{
 
@@ -43,9 +45,11 @@ int main(void)
 
 		help=set;
 
+		//Inputs the number of slots
 		printf("\nInput the number of slots on the board(max 20): ");
 		scanf("%d",&num_of_slots);
 
+		//error checks the number of slots
 		while(num_of_slots<set||num_of_slots>20)
 		{
 
@@ -122,6 +126,7 @@ int main(void)
 
 		set=help;
 
+	//sets players to random slots
     int pup, randomnumber, arraytest[6];
     int same = 1;
     for(pup=0;pup<set;pup++)
@@ -148,7 +153,7 @@ int main(void)
 }
 int cantmove1, cantmove2, choice;
 
-
+//allows the moving of players
 for(pup=0;pup<set;pup++)
 {
   cantmove1 = 0, cantmove2=0;
@@ -244,20 +249,48 @@ record[pup].dexterity=record[pup].dexterity-10;
 printf("New position of the player is %d, %s\n", record[pup].slots, record[pup].slotsT);
 }
     /*for(i=0;i<set;i++)
-		{
-			printf("\nPlayer %d lp: %d\n",i+1,record[i].lp);
-			printf("\nPlayer %d smartness: %d\n",i+1,record[i].smartness);
-			printf("\nPlayer %d strength: %d\n",i+1,record[i].strength);
-			printf("\nPlayer %d magicskills: %d\n",i+1,record[i].magicskills);
-			printf("\nPlayer %d luck: %d\n",i+1,record[i].luck);
-			printf("\nPlayer %d dexterity: %d\n",i+1,record[i].dexterity);
-		}*/
+	{
+		printf("\nPlayer %d lp: %d\n",i+1,record[i].lp);
+		printf("\nPlayer %d smartness: %d\n",i+1,record[i].smartness);
+		printf("\nPlayer %d strength: %d\n",i+1,record[i].strength);
+		printf("\nPlayer %d magicskills: %d\n",i+1,record[i].magicskills);
+		printf("\nPlayer %d luck: %d\n",i+1,record[i].luck);
+		printf("\nPlayer %d dexterity: %d\n",i+1,record[i].dexterity);
+	}*/
 
+	for(i=0;i<set;i++)
+		{
+			attack(record,set,num_of_slots,i);
+
+
+			for(p=0;i<set;i++)
+			{
+				printf("\n%s ",i,record[p].player);
+				if(record[p].pType==1)
+				{
+					printf("%s, ","Elf");
+				}
+				else if(record[p].pType==2)
+				{
+					printf("%s, ","Human");
+				}
+				else if(record[p].pType==3)
+				{
+					printf("%s, ","Ogre");
+				}
+				else if(record[p].pType==4)
+				{
+					printf("%s, ","Wizard");
+				}
+				printf("%d)",i,record[p].lp);
+			}
+		}
 		return 0;
 }
 void makeslots(struct slots *array, int anna)
 {
-  srand(time(NULL));
+  //assigns a slot type to each slot
+srand(time(NULL));
 int x,z;
 for
   (x=0; x<anna; x++){
@@ -285,6 +318,7 @@ void attack(struct list record[],int set,int slotnum, int o)
 	int j,f,k,z=0,w=0,q,person,diff=0,victim;
 	unsigned int other=22;
 	
+	//finds the difference between the attacker and the potential victims
 	for(f=0;f<set;f++)
 	{
 		diff=record[o].slots-record[f].slots;
@@ -306,6 +340,7 @@ void attack(struct list record[],int set,int slotnum, int o)
 	
 	other=set-1;
 	
+	//prints the players you are allowed to attack
 	printf("\nPlayers, player %d is allowed to attack:",o);
 	for(f=0;f<set;f++)
 	{
@@ -321,9 +356,11 @@ void attack(struct list record[],int set,int slotnum, int o)
 		}
 	}
 	
+	//chooses the player you want to attack
 	printf("\nEnter the number of the player you would like to attack: ");
 	scanf("%d",&person);
 	
+	//error checks the player you want to attack
 	while(person!=z||person!=w)
 	{
 		printf("\nError.");
@@ -331,6 +368,7 @@ void attack(struct list record[],int set,int slotnum, int o)
 		scanf("%d",&person);
 	}
 	
+	//performs the attack by changing the capabilities
 	if(record[person].strength<=70)
 	{
 		record[person].lp=record[person].lp-(0.5*record[person].strength);
